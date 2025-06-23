@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt(); // total files
+        int M = sc.nextInt(); // ignored files
+        int K = sc.nextInt(); // tracked files
+
+        int[] ignored = new int[M];
+        int[] tracked = new int[K];
+
+        // input ignored files
+        for (int i = 0; i < M; i++) {
+            ignored[i] = sc.nextInt();
+        }
+
+        // input tracked files
+        for (int i = 0; i < K; i++) {
+            tracked[i] = sc.nextInt();
+        }
+
+        // Part 1: Count files that are both ignored and tracked
+        int both = 0;
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < K; j++) {
+                if (ignored[i] == tracked[j]) {
+                    both++;
+                    break; // match found
+                }
+            }
+        }
+
+        // Part 2: Count files that are neither ignored nor tracked
+        int neither = 0;
+        for (int i = 1; i <= N; i++) {
+            boolean isIgnored = false;
+            boolean isTracked = false;
+
+            // check if ignored
+            for (int j = 0; j < M; j++) {
+                if (i == ignored[j]) {
+                    isIgnored = true;
+                    break;
+                }
+            }
+
+            // check if tracked
+            for (int j = 0; j < K; j++) {
+                if (i == tracked[j]) {
+                    isTracked = true;
+                    break;
+                }
+            }
+
+            if (!isIgnored && !isTracked) {
+                neither++;
+            }
+        }
+
+        System.out.println(both + " " + neither);
+    }
+}
